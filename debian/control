@@ -1,0 +1,15 @@
+Source: anoise-gui
+Section: sound
+Priority: extra
+Standards-Version: 0.0.3
+Maintainer: costales <costales.marcos@gmail.com>
+Build-Depends: python-distutils-extra, debhelper (>=7)
+Homepage: https://code.launchpad.net/anoise
+
+Package: anoise-gui
+Architecture: all
+Section: sound
+Priority: extra
+Depends: anoise, ${python:Depends}
+Description: Ambient Noise Player GUI
+ GUI for anoise

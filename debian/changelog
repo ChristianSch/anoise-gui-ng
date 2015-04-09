@@ -1,0 +1,6 @@
+anoise-gui (0.0.3) trusty; urgency=low
+
+  * Removed menu (deprecated)
+
+ -- costales <costales.marcos@gmail.com>  Wed, 1 Apr 2015 22:19:31 +0000
+
