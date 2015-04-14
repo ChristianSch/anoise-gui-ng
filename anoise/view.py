@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# ANoise 0.0.18 (Ambient Noise)
+# ANoise 0.0.4 (Ambient Noise)
 # Copyright (C) 2015 Marcos Alvarez Costales https://launchpad.net/~costales
 #
 # ANoise is free software; you can redistribute it and/or modify
@@ -16,7 +16,9 @@
 # along with ANoise; if not, see http://www.gnu.org/licenses
 # for more information.
 
+import os, webbrowser, threading
 from gi.repository import Gtk
+from preferences import Preferences
 
 
 class ExtraWindow:
@@ -55,19 +57,39 @@ class ExtraWindow:
         self.btn_play.set_image(image)
         self._set_window_icon()
     
+    def _play(self):
+        self.player.is_playing = True
+        self.player._sound_menu_play()
+        image = Gtk.Image(stock=Gtk.STOCK_MEDIA_PAUSE)
+        self.btn_play.set_image(image)
+    
+    def _pause(self):
+        if self.player.is_playing:
+            self.player.is_playing = False
+        self.player._sound_menu_pause()
+        image = Gtk.Image(stock=Gtk.STOCK_MEDIA_PLAY)
+        self.btn_play.set_image(image)
+    
     def on_btn_play_pause_clicked(self, widget, data=None):
-        self.player.is_playing = not self.player.is_playing
-        if not self.player.is_playing:
-            self.player._sound_menu_pause()
-            image = Gtk.Image(stock=Gtk.STOCK_MEDIA_PLAY)
-            self.btn_play.set_image(image)
+        if self.player.is_playing:
+            self._pause()
         else:
-            self.player._sound_menu_play()
-            image = Gtk.Image(stock=Gtk.STOCK_MEDIA_PAUSE)
-            self.btn_play.set_image(image)
+            self._play()
+    
+    def on_menu_preferences_activate(self, widget, data=None):
+        if not os.path.isfile('/tmp/anoise_preferences'):
+            open('/tmp/anoise_preferences', 'a').close()
+            Preferences(self)
+    
+    def set_timer(self, enable, minutes):
+        if enable:
+            self.timer = threading.Timer(minutes, self._pause)
+            self.timer.start()
+        else:
+            self.timer.cancel()
     
     def on_main_win_delete_event(self, widget, data=None):
         Gtk.main_quit()
     
     def on_menu_about_activate(self, widget, data=None):
-        self.player._sound_menu_raise()
+        webbrowser.open_new('http://anoise.tuxfamily.org')
