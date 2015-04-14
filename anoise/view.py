@@ -89,6 +89,7 @@ class ExtraWindow:
             self.timer.cancel()
     
     def on_main_win_delete_event(self, widget, data=None):
+        self.timer.cancel()
         Gtk.main_quit()
     
     def on_menu_about_activate(self, widget, data=None):
