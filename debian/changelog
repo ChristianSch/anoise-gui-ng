@@ -1,6 +1,7 @@
-anoise-gui (0.0.3) trusty; urgency=low
+anoise-gui (0.0.4) trusty; urgency=low
 
-  * Removed menu (deprecated)
+  * Precise Gtk
+  * Preferences
 
  -- costales <costales.marcos@gmail.com>  Wed, 1 Apr 2015 22:19:31 +0000
 

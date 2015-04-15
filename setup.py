@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# ANoise GUI 0.0.3 - http://launchpad.net/anoise
+# ANoise GUI 0.0.4 - http://launchpad.net/anoise
 # Copyright (C) 2012-2015 Marcos Alvarez Costales https://launchpad.net/~costales
 #
 # ANoise is free software; you can redistribute it and/or modify
@@ -26,7 +26,7 @@ data = [('/usr/share/anoise', glob.glob('anoise/*'))]
 # Setup stage
 DistUtilsExtra.auto.setup(
     name         = "anoise-gui",
-    version      = "0.0.3",
+    version      = "0.0.4",
     description  = "Ambient Noise GUI",
     author       = "Marcos Alvarez Costales https://launchpad.net/~costales",
     author_email = "https://launchpad.net/~costales",

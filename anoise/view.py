@@ -21,12 +21,13 @@ from gi.repository import Gtk
 from preferences import Preferences
 
 
-class ExtraWindow:
+class GUI:
     """This will be for DE as MATE 14.10+ which hasn't sound indicator with Gtk3"""
     def __init__(self, player):
         self.player = player
-        builder = Gtk.Builder()
+        self.win_preferences = Preferences(self)
         
+        builder = Gtk.Builder()
         builder.add_from_file('/usr/share/anoise/anoise.ui')
         self.win_icon  = builder.get_object('icon_noise')
         self.btn_play  = builder.get_object('btn_play')
@@ -77,16 +78,21 @@ class ExtraWindow:
             self._play()
     
     def on_menu_preferences_activate(self, widget, data=None):
-        if not os.path.isfile('/tmp/anoise_preferences'):
-            open('/tmp/anoise_preferences', 'a').close()
-            Preferences(self)
+        self.win_preferences.show()
     
-    def set_timer(self, enable, minutes):
+    def set_timer(self, enable, seconds):
         if enable:
-            self.timer = threading.Timer(minutes, self._pause)
+            self.timer = threading.Timer(seconds, self._set_future_pause)
             self.timer.start()
         else:
             self.timer.cancel()
+    
+    def _set_future_pause(self):
+        self.win_preferences.set_show_timer()
+        self._pause()
+    
+    def on_menu_about_activate(self, widget, data=None):
+        webbrowser.open_new('http://anoise.tuxfamily.org')
     
     def on_main_win_delete_event(self, widget, data=None):
         try:
@@ -94,6 +100,3 @@ class ExtraWindow:
         except:
             pass
         Gtk.main_quit()
-    
-    def on_menu_about_activate(self, widget, data=None):
-        webbrowser.open_new('http://anoise.tuxfamily.org')
